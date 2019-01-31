@@ -23,7 +23,7 @@ class Messages
   private
 
   def create_db
-    @db = Sequel.postgres
+    @db = Sequel.postgres(user: 'postgres')
 
     @db.create_table :users do
       primary_key :id
