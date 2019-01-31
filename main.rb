@@ -12,7 +12,7 @@ Telegram::Bot::Client.run(token) do |bot|
         bot.api.sendMessage(
           chat_id: message.chat.id,
           reply_to_message_id: message.message_id,
-           text: "@#{message.reply_to_message.from.username} karma growth"
+          text: "@#{message.reply_to_message.from.username} karma growth"
         )
         db.save_to_db_result(message.reply_to_message.from.username)
       end
