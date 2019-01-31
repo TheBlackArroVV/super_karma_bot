@@ -18,19 +18,22 @@ class Messages
   def show_all_stat
     result = []
     @users.all.each { |u| result.push(u[:user_name], u[:count]) }
+    result
   end
 
   private
 
   def create_db
-    @db = Sequel.postgres(user: 'postgres')
+    @db = Sequel.postgres(user: 'postgres', port: 5432)
+
+    @users = @db[:users]
+
+    return if @users
 
     @db.create_table :users do
       primary_key :id
       String :user_name
       Integer :count
     end
-
-    @users = @db[:users]
   end
 end
