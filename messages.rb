@@ -24,8 +24,7 @@ class Messages
   private
 
   def create_db
-    # @db = Sequel.connect(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
-    @db = Sequel.postgres(user: 'postgres')
+    @db = Sequel.connect(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 
     @db.create_table? :users do
       primary_key :id
