@@ -10,12 +10,20 @@ Telegram::Bot::Client.run(token) do |bot|
     case message.text
     when '++'
       if message.reply_to_message
-        pp 'here'
         bot.api.sendMessage(
           chat_id: message.chat.id,
           text: "@#{message.reply_to_message.from.username} karma growth"
         )
         db.save_to_db_result(message.reply_to_message.from.username)
+      end
+
+    when '--'
+      if message.reply_to_message
+        bot.api.sendMessage(
+          chat_id: message.chat.id,
+          text: "@#{message.reply_to_message.from.username} karma decrease"
+        )
+        db.decrease_karma(message.reply_to_message.from.username)
       end
 
     when '/all_stat'
