@@ -3,7 +3,7 @@ require_relative 'messages'
 
 db = Messages.new
 
-token = '649271734:AAGeC6IwUFARpqwy41Mv-QgR7WYyqdHH22M'
+token = ENV['TELEGRAM_TOKEN']
 
 Telegram::Bot::Client.run(token) do |bot|
   bot.listen do |message|
