@@ -1,5 +1,6 @@
 require 'telegram/bot'
 require_relative 'messages'
+require 'dotenv/load'
 
 db = Messages.new
 
