@@ -26,9 +26,12 @@ class Messages
   end
 
   def show_all_stat
-    result = []
-    @users.all.each { |u| result.push(u[:user_name], u[:count]) }
-    result
+    string = ''
+    @users.order(:user_name).all.each do |user|
+      string += "#{user[:user_name]}: #{user[:count]}\n"
+    end
+
+    string
   end
 
   private
