@@ -28,7 +28,7 @@ Telegram::Bot::Client.run(token) do |bot|
       end
 
     when '/all_stat'
-      bot.api.sendMessage(chat_id: message.chat.id, text: db.show_all_stat.to_json)
+      bot.api.sendMessage(chat_id: message.chat.id, text: db.show_all_stat)
     end
   end
 end
