@@ -1,34 +1,23 @@
 require 'telegram/bot'
-require_relative 'messages'
+require_relative 'db/database'
 require 'dotenv/load'
+require 'byebug'
+Dir[File.join(__dir__, 'config', 'initializers', '*.rb')].each { |file| require file }
+Dir[File.join(__dir__, 'app', 'services', '*.rb')].each { |file| require file }
 
-db = Messages.new
+DB = Database.new # https://github.com/jeremyevans/sequel#the-db-convention
 
-token = ENV['TELEGRAM_TOKEN']
-
-Telegram::Bot::Client.run(token) do |bot|
+Telegram::Bot::Client.run(TOKEN) do |bot|
   bot.listen do |message|
     case message.text
-    when '++'
-      if message.reply_to_message
-        bot.api.sendMessage(
-          chat_id: message.chat.id,
-          text: "@#{message.reply_to_message.from.username} karma growth"
-        )
-        db.save_to_db_result(message.reply_to_message.from.username)
-      end
+    when INCREASEKARMA
+      IncreaseKarmaService.new(message, bot).call if message.reply_to_message
 
-    when '--'
-      if message.reply_to_message
-        bot.api.sendMessage(
-          chat_id: message.chat.id,
-          text: "@#{message.reply_to_message.from.username} karma decrease"
-        )
-        db.decrease_karma(message.reply_to_message.from.username)
-      end
+    when DECREASEKARMA
+      DecreaseKarmaService.new(message, bot).call if message.reply_to_message
 
-    when '/all_stat'
-      bot.api.sendMessage(chat_id: message.chat.id, text: db.show_all_stat)
+    when GETSTAT
+      KarmaService.new(message, bot).show_statistic
     end
   end
 end
