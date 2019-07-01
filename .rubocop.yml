@@ -1,0 +1,17 @@
+require: rubocop-performance
+
+AllCops:
+  DisplayCopNames: false
+  DisplayStyleGuide: false
+  StyleGuideCopsOnly: false
+  TargetRubyVersion: 2.5.0
+
+Documentation:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 120
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+  EnforcedStyle: never
