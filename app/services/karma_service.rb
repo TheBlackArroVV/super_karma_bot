@@ -14,8 +14,7 @@ class KarmaService
   def statistic_params
     {
       chat_id: @chat.id,
-      text: statistic_message,
-      parse_mode: :markdown
+      text: statistic_message
     }
   end
 
@@ -31,6 +30,6 @@ class KarmaService
   end
 
   def user_statistic(user, medals)
-    "\n#{medals.shift} #{username(user)}: *#{user[:count]}*"
+    "\n#{medals.shift} #{username(user)}: #{user[:count]}"
   end
 end
