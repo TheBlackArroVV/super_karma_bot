@@ -14,22 +14,50 @@ class KarmaService
   def statistic_params
     {
       chat_id: @chat.id,
-      text: statistic_message
+      text: statistic_message,
+      parse_mode: 'HTML'
     }
   end
 
   def statistic_message
+    <<~STRING
+      <b>🏆This is the karma champions list</b>🏆
+      <pre>------------------------------
+      #{user_statistic}
+      ------------------------------
+      </pre>
+    STRING
+  end
+
+  def username(user_name)
+    name = user_name || 'null'
+    until name.length == 20 do name += ' ' end
+    name
+  end
+
+  def user_statistic
     medals = %w[🥇 🥈 🥉]
-    result = '🏆This is the karma champions list🏆'
-    DB.users.each { |user| result << user_statistic(user, medals) }
-    result
+    ''.yield_self do |result|
+      DB.count_grouped_users
+        .each_value
+        .with_index do |stat, index|
+          stat.each { |stat_group| result << user_stat(stat_group, medals[index]) }
+        end
+      result.strip
+    end
   end
 
-  def username(user)
-    user[:user_name] || 'null'
+  def user_stat(user, medal)
+    "#{medal(medal)} #{username(user[:user_name])} #{user_karma(user[:count])}\n"
   end
 
-  def user_statistic(user, medals)
-    "\n#{medals.shift} #{username(user)}: #{user[:count]}"
+  def medal(medal)
+    medal ||= '  '
+    "|#{medal}|"
+  end
+
+  def user_karma(count)
+    karma = count.to_s || ' '
+    "|#{karma[0..4]}|"
   end
 end
