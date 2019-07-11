@@ -29,6 +29,12 @@ class Database
     @db[:users].reverse_order(:count)
   end
 
+  def count_grouped_users
+    users
+      .to_a
+      .group_by { |user| user[:count] }
+  end
+
   private
 
   def initialize_db
