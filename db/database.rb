@@ -2,7 +2,9 @@ require 'sequel'
 
 class Database
   def initialize
-    initialize_db
+    @db = Sequel.connect(DATABASE_URL)
+
+    @users = @db[:users]
   end
 
   def increase_karma(user_name)
@@ -33,23 +35,5 @@ class Database
     users
       .to_a
       .group_by { |user| user[:count] }
-  end
-
-  private
-
-  def initialize_db
-    @db = Sequel.connect(DATABASE_URL)
-
-    initialize_table
-
-    @users = @db[:users]
-  end
-
-  def initialize_table
-    @db.create_table? :users do
-      primary_key :id
-      String :user_name
-      Integer :count
-    end
   end
 end
