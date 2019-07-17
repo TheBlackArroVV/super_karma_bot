@@ -29,6 +29,7 @@ Install
 git clone https://github.com/TheBlackArroVV/super_karma_bot
 cp .env.example .env
 bundle install
+rake db:migrate
 bundle exec ruby main.rb
 ```
 
