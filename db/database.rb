@@ -7,23 +7,23 @@ class Database
     @users = @db[:users]
   end
 
-  def increase_karma(user_name)
-    user = users.where(user_name: user_name)
+  def increase_karma(user_data)
+    user = users.where(username: user_data.username)
 
     if user.first
-      user.update(count: user.first[:count] + 1)
+      update_user_karma_counter(user, user.first[:count] + 1)
     else
-      users.insert(user_name: user_name, count: 1)
+      create_user(user_data, 1)
     end
   end
 
-  def decrease_karma(user_name)
-    user = users.where(user_name: user_name)
+  def decrease_karma(user_data)
+    user = users.where(username: user_data.username)
 
     if user.first
-      user.update(count: user.first[:count] - 1)
+      update_user_karma_counter(user, user.first[:count] - 1)
     else
-      users.insert(user_name: user_name, count: 0)
+      create_user(user_data)
     end
   end
 
@@ -35,5 +35,15 @@ class Database
     users
       .to_a
       .group_by { |user| user[:count] }
+  end
+
+  private
+
+  def create_user(user_data, karma_count = 0)
+    users.insert(UserBuilder.call(user_data, karma_count))
+  end
+
+  def update_user_karma_counter(user, new_count)
+    user.update(count: new_count)
   end
 end

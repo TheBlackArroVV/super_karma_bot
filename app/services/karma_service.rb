@@ -29,8 +29,8 @@ class KarmaService
     STRING
   end
 
-  def username(user_name)
-    name = user_name || 'null'
+  def username(username)
+    name = username || 'null'
     until name.length == 20 do name += ' ' end
     name
   end
@@ -48,7 +48,7 @@ class KarmaService
   end
 
   def user_stat(user, medal)
-    "#{medal(medal)} #{username(user[:user_name])} #{user_karma(user[:count])}\n"
+    "#{medal(medal)} #{username(user[:username])} #{user_karma(user[:count])}\n"
   end
 
   def medal(medal)
