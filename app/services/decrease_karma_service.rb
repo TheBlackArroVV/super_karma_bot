@@ -6,7 +6,7 @@ class DecreaseKarmaService < KarmaService
       chat_id: @chat.id,
       text: message_text
     )
-    DB.decrease_karma(@user.username)
+    DB.decrease_karma(@user)
   end
 
   private
