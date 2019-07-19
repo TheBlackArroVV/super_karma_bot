@@ -18,6 +18,9 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
 
     when GETSTAT
       KarmaService.new(message, bot).show_statistic
+
+    when UPDATEUSERPROFILE
+      UpdateUserProfileService.new(message, bot).update
     end
   end
 end
