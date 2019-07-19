@@ -26,7 +26,7 @@ class UpdateUserProfileService < BaseService
       user[:last_name] = user_data.last_name
       user[:username] = user_data.username
       user[:telegram_id] = user_data.id
-      user[:count] = user&.count || 0
+      user[:count] = user.count.to_i
     end
   end
 

@@ -1,4 +1,6 @@
-class KarmaService
+require_relative 'base_service'
+
+class KarmaService < BaseService
   def initialize(message, bot)
     @user = message.reply_to_message.from if message.reply_to_message
     @bot = bot
@@ -38,7 +40,8 @@ class KarmaService
   def user_statistic
     medals = %w[🥇 🥈 🥉]
     ''.yield_self do |result|
-      DB.count_grouped_users
+      User
+        .count_grouped_users
         .each_value
         .with_index do |stat, index|
           stat.each { |stat_group| result << user_stat(stat_group, medals[index]) }

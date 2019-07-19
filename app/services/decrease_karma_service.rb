@@ -2,11 +2,9 @@ require_relative 'karma_service'
 
 class DecreaseKarmaService < KarmaService
   def call
-    @bot.api.sendMessage(
-      chat_id: @chat.id,
-      text: message_text
-    )
-    DB.decrease_karma(@user)
+    User.decrease_karma(@user)
+
+    send_karma_decrease(message_text)
   end
 
   private
