@@ -1,11 +1,4 @@
-require 'telegram/bot'
-require_relative 'db/database'
-require 'dotenv/load'
-require 'byebug'
-Dir[File.join(__dir__, 'config', 'initializers', '*.rb')].each { |file| require file }
-Dir[File.join(__dir__, 'app', 'services', '*.rb')].each { |file| require file }
-
-DB = Database.new # https://github.com/jeremyevans/sequel#the-db-convention
+require_relative 'config/application'
 
 Telegram::Bot::Client.run(TOKEN) do |bot|
   bot.listen do |message|
@@ -18,6 +11,9 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
 
     when GETSTAT
       KarmaService.new(message, bot).show_statistic
+
+    when UPDATEUSERPROFILE
+      UpdateUserProfileService.new(message, bot).update
     end
   end
 end

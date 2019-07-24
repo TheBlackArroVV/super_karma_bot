@@ -19,6 +19,9 @@ Bot comes with the dashboard that helps to stay on top of your team activity and
 `/all stat` - shows Karma statistic for each user.
 Users ordering by Karma count(`DESC`).
 
+`/update_user_profile` this command allows User with `admin` role updating the other User profile info.
+For using this feature just put to replayed message with `/update_user_profile`
+
 For `increasing` Karma reply for user message with `++` text. 
 
 For `decreasing` Karma reply for user message with `--` text. 
