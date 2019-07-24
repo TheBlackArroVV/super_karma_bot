@@ -1,6 +1,6 @@
 require_relative 'config/application'
 
-Telegram::Bot::Client.run(TOKEN) do |bot|
+Telegram::Bot::Client.run(ENV.fetch('TELEGRAM_TOKEN')) do |bot|
   bot.listen do |message|
     case message.text
     when INCREASEKARMA

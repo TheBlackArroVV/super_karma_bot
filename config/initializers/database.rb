@@ -1,3 +1,3 @@
 require 'sequel'
 
-Sequel.connect(DATABASE_URL)
+Sequel.connect(ENV.fetch('DATABASE_URL'))
