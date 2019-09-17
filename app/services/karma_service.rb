@@ -31,14 +31,14 @@ class KarmaService
 
   def username(username)
     name = username || 'null'
-    until name.length == 20 do name += ' ' end
+    until name.length >= 20 do name += ' ' end
     name
   end
 
   def user_statistic
     medals = %w[🥇 🥈 🥉]
     ''.yield_self do |result|
-      DB.count_grouped_users
+      DB.count_grouped_users(@chat.id)
         .each_value
         .with_index do |stat, index|
           stat.each { |stat_group| result << user_stat(stat_group, medals[index]) }
