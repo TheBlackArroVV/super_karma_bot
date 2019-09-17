@@ -8,6 +8,7 @@ class Database
   end
 
   def increase_karma(user_data, chat_id)
+    chat_id = chat_id.to_s
     user = users.where(username: user_data.username, chat_id: chat_id)
 
     if user.first
@@ -18,6 +19,7 @@ class Database
   end
 
   def decrease_karma(user_data, chat_id)
+    chat_id = chat_id.to_s
     user = users.where(username: user_data.username, chat_id: chat_id)
 
     if user.first
@@ -34,7 +36,7 @@ class Database
 
   def count_grouped_users(chat_id)
     users
-      .where(chat_id: chat_id)
+      .where(chat_id: chat_id.to_s)
       .to_a
       .group_by { |user| user[:count] }
   end
@@ -42,7 +44,7 @@ class Database
   private
 
   def create_user(user_data, karma_count = 0, chat_id)
-    users.insert(UserBuilder.call(user_data, karma_count, chat_id))
+    users.insert(UserBuilder.call(user_data, karma_count, chat_id.to_s))
   end
 
   def update_user_karma_counter(user, new_count)
