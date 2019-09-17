@@ -31,7 +31,7 @@ class KarmaService
 
   def username(username)
     name = username || 'null'
-    until name.length == 20 do name += ' ' end
+    until name.length >= 20 do name += ' ' end
     name
   end
 

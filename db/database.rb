@@ -13,7 +13,7 @@ class Database
     if user.first
       update_user_karma_counter(user, user.first[:count] + 1)
     else
-      create_user(user_data, 1)
+      create_user(user_data, 1, chat_id)
     end
   end
 
@@ -23,7 +23,7 @@ class Database
     if user.first
       update_user_karma_counter(user, user.first[:count] - 1)
     else
-      create_user(user_data, chat_id)
+      create_user(user_data, 0, chat_id)
     end
   end
 
@@ -42,7 +42,7 @@ class Database
   private
 
   def create_user(user_data, karma_count = 0, chat_id)
-    users.insert(UserBuilder.call(user_data, karma_count))
+    users.insert(UserBuilder.call(user_data, karma_count, chat_id))
   end
 
   def update_user_karma_counter(user, new_count)
