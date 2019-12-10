@@ -13,7 +13,7 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
     when INCREASEKARMA
       IncreaseKarmaService.new(message, bot).call if message.reply_to_message
 
-    when DECREASEKARMA
+    when DECREASEKARMA, DECREASEKARMATG
       DecreaseKarmaService.new(message, bot).call if message.reply_to_message
 
     when GETSTAT
