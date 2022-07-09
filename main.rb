@@ -18,6 +18,13 @@ Telegram::Bot::Client.run(TOKEN) do |bot|
 
     when GETSTAT
       KarmaService.new(message, bot).show_statistic
+
+    when 'remind_me'
+      bot.api.sendMessage(
+        chat_id: message.chat,
+        text: 'reminder',
+        scheduled_at: Time.now + 30
+      )
     end
   end
 end
